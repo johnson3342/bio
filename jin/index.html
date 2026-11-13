@@ -40,7 +40,12 @@
     opacity: 0;
     transition: opacity 1.2s ease;
   }
-  body.entered #waterfall { opacity: .4; }
+  body.entered #waterfall { opacity: .6; }
+  #bg-img {
+    position: fixed; inset: 0; z-index: 0;
+    background: url("bg.png") center / cover no-repeat;
+    filter: brightness(.45) saturate(.9);
+  }
   #vignette {
     position: fixed; inset: 0; z-index: 2;
     background: radial-gradient(ellipse at center, transparent 42%, rgba(0,0,0,.92) 100%);
@@ -264,6 +269,7 @@
       <div id="intro-foot">therealjewman.lol/jin</div>
     </div>
   </div>
+  <div id="bg-img"></div>
   <canvas id="waterfall"></canvas>
   <div id="vignette"></div>
   <div id="fx-main"></div>
@@ -386,17 +392,17 @@ function setupWaterfall() {
   const spawn = (top) => ({
     x: Math.random() * W,
     y: top ? -Math.random() * H : Math.random() * H,
-    sp: 2.2 + Math.random() * 4.2,
-    len: 10 + Math.random() * 26,
-    sway: .4 + Math.random() * 1.4,
+    sp: 4.5 + Math.random() * 5,
+    len: 14 + Math.random() * 28,
+    sway: .5 + Math.random() * 1.7,
     ph: Math.random() * 6.28,
-    a: .12 + Math.random() * .4,
-    w: Math.random() < .15 ? 1.6 : .8
+    a: .15 + Math.random() * .4,
+    w: Math.random() < .2 ? 2.2 : .8
   });
   const build = () => {
     W = cv.width = window.innerWidth;
     H = cv.height = window.innerHeight;
-    const n = Math.min(160, Math.floor(W / 9));
+    const n = Math.min(340, Math.floor(W / 4.5));
     P = Array.from({ length: n }, () => spawn());
   };
   const step = () => {
