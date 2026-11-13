@@ -123,12 +123,7 @@
   #confetti-canvas { position: fixed; inset: 0; z-index: 90; pointer-events: none; }
 
   /* custom cursor */
-  #cursor {
-    position: fixed; left: 0; top: 0; z-index: 200;
-    width: 32px; height: 32px; pointer-events: none;
-    transform: translate(-999px, -999px);
-  }
-  #cursor canvas { width: 32px; height: 32px; }
+  * { cursor: url("regman.cur"), auto; }
   .drip {
     position: fixed; z-index: 201; pointer-events: none;
     width: 2px; height: 4px;
@@ -138,7 +133,6 @@
     transition: transform .55s cubic-bezier(.3,.6,.4,1), opacity .55s ease;
   }
   @media (pointer: fine) {
-    * { cursor: none !important; }
   }
   .avatar-wrap { cursor: pointer; }
 
@@ -426,7 +420,6 @@
   <div id="vignette"></div>
   <canvas id="confetti-canvas"></canvas>
   <div id="fx-main"></div>
-  <div id="cursor"><canvas id="cursor-canvas" width="32" height="32"></canvas></div>
   <audio id="bgm" src="bgm.mp3" loop preload="auto"></audio>
   <div id="player">
     <div id="pl-bar"><div id="pl-fill"></div></div>
@@ -850,32 +843,14 @@ document.addEventListener("click", (e) => {
   spawnSpark(e.clientX, e.clientY);
 });
 
-/* ---- custom cursor ---- */
+/* ---- custom cursor drips ---- */
 function setupCursor() {
   if (!window.matchMedia("(pointer: fine)").matches) return;
-  const cv = $("cursor-canvas");
-  const c = cv.getContext("2d");
-  c.beginPath();
-  c.moveTo(5, 3);
-  c.lineTo(5, 18);
-  c.lineTo(10, 13);
-  c.lineTo(13, 22);
-  c.lineTo(16, 21);
-  c.lineTo(13, 12);
-  c.lineTo(18, 12);
-  c.closePath();
-  c.lineWidth = 2.5;
-  c.lineJoin = "round";
-  c.strokeStyle = "rgba(0,0,0,.9)";
-  c.stroke();
-  c.fillStyle = "#ffffff";
-  c.fill();
   let mx = -100, my = -100, lastMove = 0;
   document.addEventListener("mousemove", (e) => {
     mx = e.clientX;
     my = e.clientY;
     lastMove = performance.now();
-    $("cursor").style.transform = "translate(" + (mx - 1) + "px," + (my - 1) + "px)";
   });
   setInterval(() => {
     if (performance.now() - lastMove > 1200) return;
